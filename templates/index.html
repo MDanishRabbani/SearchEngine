@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Search Engine</title>
+  </head>
+  <body>
+    <h1>Search Engine</h1>
+    <!-- Update the form method to GET -->
+    <form action="/search" method="get">
+      <label for="search_query">Query:</label>
+      <input type="text" id="search_query" name="search_query" required />
+
+      <label for="top_k">Top K:</label>
+      <select id="top_k" name="top_k">
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="30">30</option>
+        <option value="40">40</option>
+        <option value="50">50</option>
+      </select>
+
+      <label for="search_engine">Search Engine:</label>
+      <select id="search_engine" name="search_engine">
+        <option value="c-code">C Code</option>
+        <option value="swish-e">Swish-e</option>
+        <option value="nutch">Nutch</option>
+      </select>
+
+      <button type="submit">Search</button>
+    </form>
+
+    {% if results %}
+    <h2>Search Results:</h2>
+    <ul>
+      {% for result in results %}
+      <!-- Change the form method to GET for navigating to the document -->
+      <li>Document ID: {{ result.doc_id }}, Score: {{ result.score }} <a href="/document/{{ result.doc_id }}">Link</a></li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </body>
+</html>
