@@ -58,16 +58,24 @@ def search():
 
 def parse_c_output(output):
     results = []
+    document_names = read_data_nme()
+
     for line in output.splitlines():
         parts = line.split()
         if len(parts) == 2:
             doc_id, score = parts
-            results.append({'doc_id': doc_id, 'score': score})
+            doc_id = int(doc_id)  # Convert doc_id to integer
+            if 0 <= doc_id < len(document_names):
+                document_name = document_names[doc_id]
+                document_title, _, _ = extract_title_and_content(f'data/{document_name}')
+                results.append({'doc_id': doc_id, 'doc_name': document_name, 'score': score, 'doc_title': document_title})
+            else:
+                print(f"Ignoring line: {line}. Invalid doc_id: {doc_id}")
         else:
-            # Handle the case where the line doesn't have exactly two parts
-            print(f"Ignoring line: {line}")
+            print(f"Ignoring line: {line}. Incorrect format.")
 
     return results
+
 
 @app.route('/document/<doc_id>', methods=['GET'])
 def show_document(doc_id):

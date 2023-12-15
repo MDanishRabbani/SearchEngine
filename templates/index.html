@@ -36,7 +36,7 @@
     <ul>
       {% for result in results %}
       <!-- Change the form method to GET for navigating to the document -->
-      <li>Document ID: {{ result.doc_id }}, Score: {{ result.score }} <a href="/document/{{ result.doc_id }}">Link</a></li>
+      <li><a href="/document/{{ result.doc_id }}">{{ result.doc_title }}</a> <br>Document ID: {{ result.doc_id }}, Document: {{ result.doc_name }}, Score: {{ result.score }}<br>----</li>
       {% endfor %}
     </ul>
     {% endif %}
